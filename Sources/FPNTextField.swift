@@ -330,7 +330,7 @@ open class FPNTextField: UITextField {
 		countryRepository.setup(with: countryCodes)
 	}
     
-    func isNumberValid() -> Bool {
+    @objc open func isNumberValid() -> Bool {
         if let phoneCode = selectedCountry?.phoneCode,
             let number = text,
             getValidNumber(phoneNumber: clean(string: "\(phoneCode) \(number)")) != nil {
