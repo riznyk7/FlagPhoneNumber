@@ -16,7 +16,14 @@ open class FPNTextField: UITextField {
 			layoutIfNeeded()
 		}
 	}
-
+    open override var placeholder: String? {
+        get {
+            return nil
+        }
+        set {
+            
+        }
+    }
 	private var flagWidthConstraint: NSLayoutConstraint?
 	private var flagHeightConstraint: NSLayoutConstraint?
 
@@ -35,9 +42,11 @@ open class FPNTextField: UITextField {
 	private lazy var phoneUtil: NBPhoneNumberUtil = NBPhoneNumberUtil()
 	private var nbPhoneNumber: NBPhoneNumber?
 	private var formatter: NBAsYouTypeFormatter?
-
-	open var flagButton: UIButton = UIButton()
-
+    
+    open var flagButton: UIButton = UIButton()
+    
+    lazy var tap = UITapGestureRecognizer(target: self, action: #selector(self.displayCountries))
+    
 	open override var font: UIFont? {
 		didSet {
 			phoneCodeTextField.font = font
@@ -98,6 +107,11 @@ open class FPNTextField: UITextField {
 
 		setup()
 	}
+    private func addLargeButton() {
+        DispatchQueue.main.async {
+            self.flagButton.superview?.addGestureRecognizer(self.tap)
+        }
+    }
 
 	private func setup() {
 		leftViewMode = .always
@@ -116,6 +130,7 @@ open class FPNTextField: UITextField {
 		} else {
 			setFlag(countryCode: FPNCountryCode.FR)
 		}
+        addLargeButton()
 	}
 
 	private func setupFlagButton() {
